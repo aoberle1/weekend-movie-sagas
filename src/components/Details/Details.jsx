@@ -14,11 +14,22 @@ function Details () {
     // Test function from Tester button, for running console logs to get values of variables
     const runTest = () => {
         console.log('details variable is equal to:', details)
+        console.log('details.title variable is equal to:', details[0].title)
+        console.log('details.poster variable is equal to:', details[0].poster)
+
     }
 
     return (
         <div>
-            <h1>This is a test</h1>
+            <h1>{details[0].title}</h1>
+            <img src={details[0].poster} />
+            <br/>
+            <br/>
+            <p>{details[0].description}</p>
+            <br/>
+            <ul>
+                {}
+            </ul>
             <button onClick={goHome}>Home</button>
             <button onClick={runTest}>Tester</button>
         </div>
