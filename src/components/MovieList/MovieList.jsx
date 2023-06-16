@@ -10,10 +10,10 @@ function MovieList() {
     const history = useHistory();
     const movies = useSelector(store => store.movies);
 
-    const goToDetails = (movieID) => {
-        console.log('movie poster was clicked with id:', movieID)
-        dispatch({ type: 'GET_DETAILS', payload: movieID})
-        history.push(`/details/${movieID}`)
+    const goToDetails = (movie) => {
+        console.log('movie poster was clicked with id:', movie)
+        dispatch({ type: 'GET_DETAILS', payload: movie})
+        history.push(`/details/${movie}`)
     }
 
     useEffect(() => {
@@ -26,7 +26,7 @@ function MovieList() {
             <section className="movies">
                 {movies.map(movie => {
                     return (
-                        <div key={movie.id} onClick={() => goToDetails(movie.id)}>
+                        <div key={movie.id} onClick={() => goToDetails(movie)}>
                             <h3>{movie.title}</h3>
                             <img src={movie.poster} alt={movie.title} />
                         </div>

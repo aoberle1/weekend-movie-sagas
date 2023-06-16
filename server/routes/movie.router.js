@@ -17,14 +17,14 @@ router.get('/', (req, res) => {
 });
 
 router.get('/details/:id', (req, res) => {
-  const queryText = `SELECT "title", "poster", "description", "name" FROM "movies" 
-  JOIN "movies_genres" ON "movies"."id" = "movies_genres"."movie_id"
-  JOIN "genres" ON "genres"."id" = "movies_genres"."genre_id"
+  const queryText = `SELECT "name" FROM "genres" 
+  JOIN "movies_genres" ON "genres"."id" = "movies_genres"."movie_id"
+  JOIN "movies" ON "movies"."id" = "movies_genres"."genre_id"
   WHERE "movies"."id"=$1;`
   console.log('req.params.id for details GET is:', req.params.id);
   pool.query(queryText, [req.params.id])
   .then(result => {
-    console.log('result from database is:', result);
+    console.log('result from database is:', result.rows);
     console.log('result.rows from database is:', result.rows);
     res.send(result.rows)
   })

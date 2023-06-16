@@ -10,6 +10,7 @@ import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import { takeEvery, put } from 'redux-saga/effects';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 // Create the rootSaga generator function
 function* rootSaga() {
@@ -33,13 +34,14 @@ function* fetchAllMovies() {
 function* getDetails(action) {
     try {
         console.log('getDetails saga action.payload is:', action.payload)
-        const details = yield axios.get(`/api/movie/details/${action.payload}`);
-        console.log('details.data for SET DETAILS has payload of:', details.data)
-        yield put({ type: 'SET_DETAILS', payload: details.data})
+        const details = yield axios.get(`/api/movie/details/${action.payload.id}`);
+        console.log('details.data for SET DETAILS is:', details.data)
+        yield put({ type: 'SET_DETAILS', payload: action.payload})
+        yield put({ type: 'SET_GENRES', payload: details.data})
     } catch (error) {
         console.log('error in getDetails saga:', error)
     }
-}
+};
 
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
