@@ -14,6 +14,7 @@ import axios from 'axios';
 // Create the rootSaga generator function
 function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies);
+    yield takeEvery('GET_DETAILS', getDetails);
 }
 
 function* fetchAllMovies() {
@@ -25,8 +26,16 @@ function* fetchAllMovies() {
 
     } catch {
         console.log('get all error');
+    }     
+}
+
+// creating getDetails saga - runs on click of movie poster on home/movie list
+function* getDetails(action) {
+    try {
+        console.log('getDetails saga action.payload is:', action.payload)
+    } catch (error) {
+        console.log('error in getDetails saga:', error)
     }
-        
 }
 
 // Create sagaMiddleware
