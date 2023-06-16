@@ -33,6 +33,9 @@ function* fetchAllMovies() {
 function* getDetails(action) {
     try {
         console.log('getDetails saga action.payload is:', action.payload)
+        const details = yield axios.get(`/api/movie/details/${action.payload}`);
+        console.log('details.data for SET DETAILS has payload of:', details.data)
+        yield put({ type: 'SET_DETAILS', payload: details.data})
     } catch (error) {
         console.log('error in getDetails saga:', error)
     }
@@ -40,6 +43,17 @@ function* getDetails(action) {
 
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
+
+// Used to temporarily store details returned from server
+const details = (state = [], action) => {
+    switch (action.type) {
+        case 'SET_DETAILS':
+            console.log('action.payload in details reducer is:', action.payload);
+            return action.payload;
+        default:
+            return state
+    }
+}
 
 // Used to store movies returned from the server
 const movies = (state = [], action) => {
@@ -66,6 +80,7 @@ const storeInstance = createStore(
     combineReducers({
         movies,
         genres,
+        details
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),
