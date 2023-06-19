@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../modules/pool')
 
+
+// get request that sends back all data from movies table - image, description, title, and ID
 router.get('/', (req, res) => {
 
   const query = `SELECT * FROM movies ORDER BY "title" ASC`;
@@ -16,6 +18,7 @@ router.get('/', (req, res) => {
 
 });
 
+// get request that joins all 3 tables, and sends back the genres of the movie clicked on
 router.get('/details/:id', (req, res) => {
   const queryText = `SELECT "name" FROM "genres" 
   JOIN "movies_genres" ON "genres"."id" = "movies_genres"."movie_id"

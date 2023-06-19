@@ -5,15 +5,19 @@ import { useEffect } from "react";
 function Details () {
 
     const history = useHistory();
+
+    // bringing details reducer from store
     const details = useSelector(store => store.details);
+
+    // bringing genres reducer from store
     const genres = useSelector(store => store.genres);
 
     const dispatch = useDispatch();
 
     const goHome = () => {
         console.log('Button was clicked, in goHome function');
+        // when button pressed, sends user back to home page
         history.push("/")
-        dispatch({ type: 'RESET_DETAILS'})
     }
 
     // Test function from Tester button, for running console logs to get values of variables
@@ -34,7 +38,7 @@ function Details () {
             <br/>
             <ul>
                 {genres.map(genre => (
-                    <div>
+                    <div key={genre.id}>
                     <li>{genre.name}</li>
                     </div>
                 ))}

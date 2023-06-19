@@ -33,10 +33,15 @@ function* fetchAllMovies() {
 // creating getDetails saga - runs on click of movie poster on home/movie list
 function* getDetails(action) {
     try {
+        // action.payload is the movie title, description, and poster
         console.log('getDetails saga action.payload is:', action.payload)
+        // axios.get using the ID of the movie clicked on as ID to grab genres for that movie from database
         const details = yield axios.get(`/api/movie/details/${action.payload.id}`);
-        console.log('details.data for SET DETAILS is:', details.data)
+        // details.data is the genre information for movie we received from axios request
+        console.log('details.data for getDetails is:', details.data)
+        // sending movie table information for movie clicked on to details reducer
         yield put({ type: 'SET_DETAILS', payload: action.payload})
+        // sending genre information to genres reducer
         yield put({ type: 'SET_GENRES', payload: details.data})
     } catch (error) {
         console.log('error in getDetails saga:', error)
@@ -46,7 +51,7 @@ function* getDetails(action) {
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
 
-// Used to temporarily store details returned from server
+// Used to temporarily store movie details returned from movies store for movie with specific ID
 const details = (state = [], action) => {
     switch (action.type) {
         case 'SET_DETAILS':
